@@ -1,0 +1,22 @@
+function rosteringRO(rc, dt, varagin)
+% Outer-level master problem implementation
+[T, I, J, N, c, f, h, M, l, u, a, b] = dealRosteringCase(rc);
+
+%% C&CG variables
+LB  = -inf;
+UB  =  inf;
+delta = 1e-4;
+
+%% Find a initial cut
+cuts = {dt};
+
+%% Outer-level C&CG
+k = 0;
+while UB - LB > delta
+    k = k + 1;
+    % 
+    [objOu, x] = MP(rc, cuts);
+    [objIn, d] = InCCG(rc, x, dt, varargin);
+end
+
+end

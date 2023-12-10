@@ -35,8 +35,8 @@ dt = randi([30, 80], 1, rostcase.T);
 %% Two-stage Robust Rostering Problem
 dt = randi([30, 80], 1, rostcase.T);
 % x = xMIP;
-gamma = 9;
+gamma = 18;
 tic;
 rosteringRO(rostcase, dt, gamma);
 elapsed_time = toc;
-fprintf("Nested C&CG: Time elapsed %.2f seconds\n", elapsed_time);
+fprintf("Nested C&CG elapsed %.2f seconds\n", elapsed_time);
