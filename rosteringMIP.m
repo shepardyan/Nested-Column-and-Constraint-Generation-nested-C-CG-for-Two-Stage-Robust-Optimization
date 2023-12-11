@@ -1,4 +1,4 @@
-function [result, x, y] = rosteringMIP(rc, d)
+function [obj, x, y] = rosteringMIP(rc, d)
 % Deterministic Rostering Problem
 [T, I, J, N, c, f, h, M, l, u, a, b] = dealRosteringCase(rc);
 
@@ -31,7 +31,8 @@ constrs = [constrs, w >= 0, z >= 0];
 obj = sum(c.*x, 'all') + sum(f.*y + h.*z, 'all') + sum(M.*w);
 
 %% Optimization
-result = optimize(constrs, obj);
+optimize(constrs, obj);
+obj = value(obj);
 x = value(x);
 y = value(y);
 end

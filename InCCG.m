@@ -5,7 +5,7 @@ function [objIn, d] = InCCG(rc, x, dt, varargin)
 %% C&CG variables
 inLB  = -inf;
 inUB  =  inf;
-delta = 1e-4;
+delta = 1e-3;
 
 %% Initialize inner-level scenario cuts array
 y  = {zeros(J, T)};
@@ -24,7 +24,7 @@ elseif nargin == 6  % cardinality based uncertainty set (T1, rho1, rho2)
     constrsMP = [constrsMP, sum(g(1:varargin{1}+2)) <= varargin{2}, ...
         sum(g(varargin{1}:end)) <= varargin{3}];
 else
-    error('parameters of inner-level master problem are wrong!')
+    error('parameters of the inner-level master problem are wrong!')
 end
 objMP = -theta;
 
@@ -39,27 +39,30 @@ while inUB - inLB > delta
     constrsMP = [constrsMP, theta <= sum(f.*y{k} + h.*z{k}, 'all') + sum(M.*w{k})];
 
     % Generate subproblem constraints
-    constrsSP{k} = [];
-    constrsSP{k} = [constrsSP{k}, z{k} <= N.* y{k}, ...
+    constrsSP{k} = [z{k} <= N.* y{k}, ...
         N * sum(x, 1) + sum(z{k}, 1) + w{k} >= d, ...
         w{k} >= 0, z{k} >= 0];
     [KKTSystem, ~] = kkt(constrsSP{k}, sum(h.*z{k}, 'all') + sum(M.*w{k}), g);
     InCCG_constrs = [InCCG_constrs, KKTSystem, constrsSP{k}];
     % Optimize master problem
-    optimize([InCCG_constrs, constrsMP], objMP);
-    
+    result = optimize([InCCG_constrs, constrsMP], objMP);
+    if result.problem ~= 0
+        disp('[INFEASIBLE]');
+    end
     % Update upper bound
     inUB = -value(objMP);
 
     % Optimize subproblem and update lower bound
-    [objSP, ySP] = InSP(rc, x, value(d)); 
+    [objSP, ySP] = InSP(rc, x, value(d));
     inLB = max([inLB, objSP]);
 
     % Update cuts
-    y{k + 1} = ySP; 
-
-    fprintf("  Inner Iteration %d, bound is %6.2f. UB is %6.2f, LB is %6.2f\n", k, inUB - inLB, inUB, inLB);
-
+    y{k + 1} = ySP;
+    if isfield(rc, 'logName') && ~isempty(rc.logName)
+        fprintf(rc.logName, "  Inner Iteration %2d, bound is %10.2f. UB is %10.2f, LB is %10.2f\n", k, inUB - inLB, inUB, inLB);
+    else
+        fprintf("  Inner Iteration %2d, bound is %10.2f. UB is %10.2f, LB is %10.2f\n", k, inUB - inLB, inUB, inLB);
+    end
 end
 
 %% Return values

@@ -29,14 +29,17 @@ rostcase.a = randi([2, 4], rostcase.J, 1);
 rostcase.b = randi([4, 6], rostcase.J, 1);
 dt = randi([30, 80], 1, rostcase.T);
 
+% Choose to save log file
+time_now = string(datetime("now", 'Format', "yyyy-MM-dd-HH-mm-ss"));
+f = fopen(string("./log/"+time_now+".txt"), 'w+');
+fclose(f);
+rostcase.logName = fopen(string("./log/"+time_now+".txt"), 'a+');
+
 %% Deterministic Rostering Problem
 [~, xMIP, yMIP] = rosteringMIP(rostcase, dt);
 
 %% Two-stage Robust Rostering Problem
-dt = randi([30, 80], 1, rostcase.T);
-% x = xMIP;
-gamma = 9;
-tic;
-rosteringRO(rostcase, dt, gamma);
-elapsed_time = toc;
-fprintf("Nested C&CG: Time elapsed %.2f seconds\n", elapsed_time);
+dt = 50 + 30 * rand(1, rostcase.T);
+gamma = 3;
+[objRO, xRO, yRO] = rosteringRO(rostcase, dt, gamma);
+

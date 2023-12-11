@@ -1,0 +1,20 @@
+Nested C&CG starts
+  Inner Iteration  1, bound is    4517.75. UB is   16587.97, LB is   12070.23
+  Inner Iteration  2, bound is     264.57. UB is   12340.92, LB is   12076.35
+  Inner Iteration  3, bound is       9.70. UB is   12094.50, LB is   12084.80
+  Inner Iteration  4, bound is       0.17. UB is   12084.97, LB is   12084.80
+  Inner Iteration  5, bound is      -0.00. UB is   12084.80, LB is   12084.80
+Outer Iteration  1, bound is     517.67. UB is   13164.03, LB is   12646.36
+  Inner Iteration  1, bound is    4486.52. UB is   16539.41, LB is   12052.89
+  Inner Iteration  2, bound is     245.68. UB is   12336.65, LB is   12090.97
+  Inner Iteration  3, bound is      18.15. UB is   12109.12, LB is   12090.97
+  Inner Iteration  4, bound is       8.62. UB is   12099.59, LB is   12090.97
+  Inner Iteration  5, bound is      -0.00. UB is   12090.97, LB is   12090.97
+Outer Iteration  2, bound is       6.32. UB is   13164.03, LB is   13157.71
+  Inner Iteration  1, bound is    4490.69. UB is   16559.15, LB is   12068.46
+  Inner Iteration  2, bound is     255.30. UB is   12339.16, LB is   12083.86
+  Inner Iteration  3, bound is      18.15. UB is   12102.01, LB is   12083.86
+  Inner Iteration  4, bound is       8.62. UB is   12092.48, LB is   12083.86
+  Inner Iteration  5, bound is      -0.00. UB is   12083.86, LB is   12083.86
+Outer Iteration  3, bound is       0.00. UB is   13163.18, LB is   13163.18
+Nested C&CG: Time elapsed 40.33 seconds
