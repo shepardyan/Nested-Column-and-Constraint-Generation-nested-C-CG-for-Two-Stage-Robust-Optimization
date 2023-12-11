@@ -1,6 +1,6 @@
 # Nested Column-and-Constraint Generation (nested C&CG) for Two-Stage Robust Optimization
 
-This is an example of solving two-stage robust optimization problem using nested C&CG algorithm. 
+This is an example of solving two-stage robust optimization problems with MIP recourse using nested C&CG algorithm. If the problem's recourse is LP, then only C&CG is enough.
 
 # Requirements
 
